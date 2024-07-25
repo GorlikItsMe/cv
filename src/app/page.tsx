@@ -6,7 +6,6 @@ import { Rodo } from "./components/rodo";
 import { WorkExperience } from "./components/work-experience";
 import { Projects } from "./components/projects";
 import { Education } from "./components/education";
-import { Technologies } from "./components/technologies";
 
 export default function HomePage() {
   const data = useUserData();
