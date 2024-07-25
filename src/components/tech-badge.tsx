@@ -1,8 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import React from "react";
 import Image from "next/image";
+import { useUserData } from "@/hooks/useUserData";
 
-const techColors = {
+/**
+ * What technology have what color
+ */
+const TECHNOLOGY_COLORS = {
   React: "#61DAFB",
   "Next.js": "#000000",
   TypeScript: "#007ACC",
@@ -35,11 +39,20 @@ const techColors = {
   "CI/CD": "#000000",
 };
 
+/**
+ * You can override the icon for some technologies
+ * for example if you want have badge with CI/CD github actions icon will be used
+ */
+const ICON_OVERRIDE = {
+  "CI/CD": "githubactions",
+  "SQL Server": "microsoftsqlserver",
+};
+
 function getTechBaseColor(tech: string) {
-  const techColor = Object.keys(techColors).find(
+  const techColor = Object.keys(TECHNOLOGY_COLORS).find(
     (key) => key.toLowerCase() === tech.toLowerCase()
-  ) as keyof typeof techColors;
-  return techColor ? techColors[techColor] : undefined;
+  ) as keyof typeof TECHNOLOGY_COLORS;
+  return techColor ? TECHNOLOGY_COLORS[techColor] : undefined;
 }
 
 interface DeviconRow {
@@ -83,13 +96,9 @@ async function getIconsConfig(tech: string) {
   return null;
 }
 
-const overrides = {
-  "CI/CD": "githubactions",
-};
-
 async function getTechIconUrl(techName: string) {
-  if (overrides[techName as keyof typeof overrides]) {
-    return getTechIconUrl(overrides[techName as keyof typeof overrides]);
+  if (ICON_OVERRIDE[techName as keyof typeof ICON_OVERRIDE]) {
+    return getTechIconUrl(ICON_OVERRIDE[techName as keyof typeof ICON_OVERRIDE]);
   }
 
   const conf = await getIconsConfig(techName);
@@ -121,6 +130,7 @@ export async function TechBadge({
   className?: string;
   children?: React.ReactNode;
 }) {
+  const { technologiesShowIcons } = useUserData();
   if (typeof children !== "string") {
     return <Badge className={className}>{children}</Badge>;
   }
@@ -130,6 +140,10 @@ export async function TechBadge({
   if (!techBaseColor) {
     console.warn(`No color found for tech: ${techName}`);
   }
+  const techIconUrl = await getTechIconUrl(techName);
+  if (!techIconUrl) {
+    console.warn(`No icon found for tech: ${techName}`);
+  }
 
   return (
     <Badge
@@ -138,49 +152,16 @@ export async function TechBadge({
       }}
       className={`${className} bg-white dark:bg-slate-200 text-black`}
     >
+      {technologiesShowIcons && techIconUrl && (
+        <Image
+          src={techIconUrl}
+          alt={techName}
+          height={16}
+          width={16}
+          className="w-4 h-4 mr-1"
+        />
+      )}
       {children}
     </Badge>
   );
 }
-
-// export async function TechBadgeWithIcon({
-//   className,
-//   children,
-// }: {
-//   className?: string;
-//   children?: React.ReactNode;
-// }) {
-//   if (typeof children !== "string") {
-//     return <Badge className={className}>{children}</Badge>;
-//   }
-
-//   const techName = children as string;
-//   const techBaseColor = getTechBaseColor(techName);
-//   if (!techBaseColor) {
-//     console.warn(`No color found for tech: ${techName}`);
-//   }
-//   const techIconUrl = await getTechIconUrl(techName);
-//   if (!techIconUrl) {
-//     console.warn(`No icon found for tech: ${techName}`);
-//   }
-
-//   return (
-//     <Badge
-//       style={{
-//         color: techBaseColor,
-//       }}
-//       className={`${className} bg-white dark:bg-primary-foreground`}
-//     >
-//       {techIconUrl && (
-//         <Image
-//           src={techIconUrl}
-//           alt={techName}
-//           height={16}
-//           width={16}
-//           className="w-4 h-4 mr-1"
-//         />
-//       )}
-//       {children}
-//     </Badge>
-//   );
-// }

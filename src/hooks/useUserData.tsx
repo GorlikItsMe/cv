@@ -15,6 +15,23 @@ function safeGetEnv(key: string) {
   return process.env[key] || key;
 }
 
+function safeGetEnvArray(key: string) {
+  return (process.env[key] || "")
+    .split(",")
+    .map((s) => s.trim()) // remove whitespace
+    .filter((a) => a.length > 0); // remove empty strings
+}
+
+function safeGetEnvArray2(key: string) {
+  return (process.env[key] || "").split("\n").map(
+    (row) =>
+      row
+        .split(",")
+        .map((s) => s.trim()) // remove whitespace
+        .filter((a) => a.length > 0) // remove empty strings
+  );
+}
+
 function getLanguageConfig() {
   const env = filterEnv("NEXT_PUBLIC_LANG_");
   const _langCodesWithDuplicates = Object.keys(env).map(
@@ -48,6 +65,7 @@ function getWorkConfig() {
       company: safeGetEnv(`NEXT_PUBLIC_WORK_${i}_COMPANY`),
       date: safeGetEnv(`NEXT_PUBLIC_WORK_${i}_DATE`),
       description: safeGetEnv(`NEXT_PUBLIC_WORK_${i}_DESCRIPTION`),
+      technologies: safeGetEnvArray2(`NEXT_PUBLIC_WORK_${i}_TECHNOLOGIES`),
     }))
     .sort((a, b) => a.id - b.id);
 }
@@ -66,10 +84,7 @@ function getProjects() {
       links: safeGetEnv(`NEXT_PUBLIC_PROJECT_${i}_LINKS`)
         .split(",")
         .map((s) => s.trim()),
-      techList: (process.env[`NEXT_PUBLIC_PROJECT_${i}_TECH_LIST`] || "")
-        .split(",")
-        .map((s) => s.trim())
-        .filter((a) => a.length > 0),
+      technologies: safeGetEnvArray2(`NEXT_PUBLIC_PROJECT_${i}_TECHNOLOGIES`),
     }))
     .sort((a, b) => a.id - b.id);
 }
@@ -113,15 +128,9 @@ const config = {
 
   education: getEducation(),
 
-  technologies: safeGetEnv("NEXT_PUBLIC_TECHNOLOGIES")
-    .split("\n")
-    .map(
-      (row) =>
-        row
-          .split(",")
-          .map((s) => s.trim()) // remove whitespace
-          .filter((a) => a.length > 0) // remove empty strings
-    ),
+  technologies: safeGetEnvArray2(`NEXT_PUBLIC_TECHNOLOGIES`),
+  technologiesShowIcons:
+    safeGetEnv("NEXT_PUBLIC_TECHNOLOGIES_SHOW_ICONS") === "true",
   language: getLanguageConfig(),
 };
 
