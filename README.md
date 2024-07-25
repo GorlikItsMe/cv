@@ -17,8 +17,13 @@ npm run dev
 # print page as PDF (use CTRL + P in your browser)
 ```
 
+## Why? You should use xyz
+
+First time I used some generators to create a CV. But I never liked the results. Then I tried to create my own CV using Word or Canva, but that was painful. I also wanted to be able to quickly update my CV before sending it to a potential employer. So I decided to create my own template using technologies I know and love.
+Also this is a great way to show my skills to potential employers.
+
 # License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-tldr: Do whatever you want with it. 😊
+TLDR: Do whatever you want with it. 😊
