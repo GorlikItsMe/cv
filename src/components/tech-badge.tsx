@@ -37,6 +37,12 @@ const TECHNOLOGY_COLORS = {
   PyTest: "#0A9EDC",
   Jest: "#C21325",
   "CI/CD": "#000000",
+  "php": "#777BB4",
+  "Laravel": "#FF2D20",
+  "Vue.js": "#4FC08D",
+  "Vuex": "#3A0D7B",
+  "Nuxt.js": "#00C58E",
+  "Vuetify": "#1867C0",
 };
 
 /**

@@ -127,11 +127,11 @@ const config = {
   projects: getProjects(),
 
   education: getEducation(),
+  
+  language: getLanguageConfig(),
 
-  technologies: safeGetEnvArray2(`NEXT_PUBLIC_TECHNOLOGIES`),
   technologiesShowIcons:
     safeGetEnv("NEXT_PUBLIC_TECHNOLOGIES_SHOW_ICONS") === "true",
-  language: getLanguageConfig(),
 };
 
 export function useUserData() {

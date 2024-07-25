@@ -26,7 +26,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="fixed top-0 left-0 bg-neutral-100 dark:bg-slate-900 w-14 h-14 flex items-center justify-center border border-slate-300 rounded-br-xl print:hidden">
+          <div className="fixed top-0 left-0 w-14 h-14 flex items-center justify-center  print:hidden">
             <ThemeToggle />
           </div>
 
