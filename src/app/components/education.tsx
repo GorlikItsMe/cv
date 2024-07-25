@@ -13,7 +13,7 @@ export function Education({ className }: EducationProps) {
     <section className={cn("text-sm", className)}>
       <h2 className="tg-h2">Education</h2>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2">
         {education.map((edu) => (
           <div key={edu.id} className="flex flex-col ps-2">
             <div className="flex flex-row justify-between mb-1 items-center">

@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { Book, Page } from "@/components/book";
 import { useUserData } from "@/hooks/useUserData";
 import { Header } from "./components/header";
@@ -21,9 +20,8 @@ export default function HomePage() {
         </section>
         <WorkExperience className="mb-4" />
         <Projects className="mb-4" />
-        <Education className="mb-4" />
         <section className="grid grid-cols-2 gap-2 mb-4">
-          <Technologies />
+          <Education />
           <Language />
         </section>
         <div className="flex-grow" /> {/* Spacer */}
