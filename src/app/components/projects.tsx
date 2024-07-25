@@ -26,18 +26,22 @@ export function Projects({ className }: ProjectsProps) {
               {p.description}
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col mb-1">
               {p.links.map((url) => (
                 <Link key={url} href={url} className="text-xs link mb-1">
                   {url}
                 </Link>
               ))}
             </div>
-            {/* <div className="flex gap-1 flex-wrap mt-2">
-              {p.techList.map((skill) => (
-                <TechBadge key={skill}>{skill}</TechBadge>
+            <div className="flex flex-col gap-1">
+              {p.technologies.map((row, i) => (
+                <div key={i} className="gap-1 flex flex-wrap">
+                  {row.map((tech) => (
+                    <TechBadge key={tech}>{tech}</TechBadge>
+                  ))}
+                </div>
               ))}
-            </div> */}
+            </div>
           </div>
         ))}
       </div>

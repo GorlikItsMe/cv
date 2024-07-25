@@ -1,3 +1,4 @@
+import { TechBadge } from "@/components/tech-badge";
 import { useUserData } from "@/hooks/useUserData";
 import { cn } from "@/lib/utils";
 
@@ -25,7 +26,16 @@ export function WorkExperience({ className }: WorkExperienceProps) {
               </div>
               <span className="text-sm">{exp.date}</span>
             </div>
-            <div className="text-xs text-justify">{exp.description}</div>
+            <div className="text-xs text-justify mb-1">{exp.description}</div>
+            <div className="flex flex-col gap-1">
+              {exp.technologies.map((row, i) => (
+                <div key={i} className="gap-1 flex flex-wrap">
+                  {row.map((tech) => (
+                    <TechBadge key={tech}>{tech}</TechBadge>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
