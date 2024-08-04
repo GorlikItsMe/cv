@@ -19,7 +19,7 @@ export function Header({ className }: { className?: string }) {
     >
       <img src={avatarUrl} alt="Avatar" className="w-20 h-20 rounded-full" />
       <div className="flex-grow">
-        <span className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent">
+        <span className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-[#00000001]">
           {firstName} {lastName}
         </span>
         <h2 className="text-xl font-semibold dark:text-neutral-300 text-neutral-700 mb-1">
@@ -29,11 +29,21 @@ export function Header({ className }: { className?: string }) {
       <div className="space-y-1 text-xs">
         <div className="flex items-center gap-2">
           <FaEnvelope className="h-4 w-4" />
-          <span className="link">{contact.email}</span>
+          <Link href={`mailto:${contact.email}`} className="link">
+            {contact.email}
+          </Link>
         </div>
         <div className="flex items-center gap-2">
           <FaPhone className="h-4 w-4" />
-          <span className="link">{contact.phone}</span>
+          <Link
+            href={`tel:${contact.phone
+              .replaceAll(" ", "")
+              .replaceAll("(", "")
+              .replaceAll(")", "")}`}
+            className="link"
+          >
+            {contact.phone}
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">
